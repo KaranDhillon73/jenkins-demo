@@ -80,11 +80,21 @@
     		<artifactId>tomcat7-maven-plugin</artifactId>
     		<version>2.2</version>
     		<configuration>
-        	    <url>http://localhost:8080/manager/text</url>
+        	    <url>http://localhost:8082/manager/text</url>
         	    <server>TomcatServer</server>
         	    <path>/myapp</path>
     		</configuration>
 	    </plugin>
         </plugins>
+	<plugin> 
+		<groupId>org.codehaus.mojo</groupId> 
+		<artifactId>cobertura-maven-plugin</artifactId> 
+		<configuration> 
+			<formats> 
+				<format>html</format> 
+				<format>xml</format> 
+			</formats> 
+		</configuration> 
+	</plugin> 
     </build>
 </project>
