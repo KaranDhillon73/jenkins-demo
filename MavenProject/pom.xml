@@ -24,7 +24,7 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
-	    dependency>
+	    <dependency>
             <groupId>com.sun</groupId>
             <artifactId>tools</artifactId>
             <version>${java.version}</version>
