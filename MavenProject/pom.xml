@@ -24,6 +24,13 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
+	    dependency>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
+            <version>${java.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/pom.xml</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
