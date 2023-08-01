@@ -74,25 +74,7 @@
            		<format>html</format>
            		<format>xml</format>
        		    </formats>
-            	    <source>1.8</source>
-            	    <target>1.8</target>
     		</configuration>
-		        <dependencies>
-<dependency>
-  <groupId>com.sun</groupId>
-  <artifactId>tools</artifactId>
-  <version>1.8</version>
-  <scope>system</scope>
-  <systemPath>C:\Program Files\Java\jdk-1.8\lib\tools.jar</systemPath>
-</dependency>	
-	<dependency>
-    <groupId>sun.jdk</groupId>
-    <artifactId>tools</artifactId>
-    <version>1.8</version>
-    <scope>system</scope>
-    <systemPath>C:\Program Files\Java\jdk-1.8\lib\tools.jar</systemPath>
-</dependency>
-    </dependencies>
 	    </plugin>
 	    <plugin>
     		<groupId>org.apache.tomcat.maven</groupId>
