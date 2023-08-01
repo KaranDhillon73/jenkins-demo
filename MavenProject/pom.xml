@@ -77,12 +77,6 @@
             	    <source>1.8</source>
             	    <target>1.8</target>
     		</configuration>
-		            <exclusions>
-            <exclusion>
-                <groupId>com.sun</groupId>
-                <artifactId>tools</artifactId>
-            </exclusion>
-        </exclusions>
 		        <dependencies>
 <dependency>
   <groupId>com.sun</groupId>
