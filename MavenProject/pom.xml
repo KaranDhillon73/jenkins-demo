@@ -87,5 +87,14 @@
     		</configuration>
 	    </plugin>
 	</plugins>
+	    <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>javancss-maven-plugin</artifactId>
+        <version>1.1</version>
+      </plugin>
+    </plugins>
+  </reporting>
     </build>
 </project>
