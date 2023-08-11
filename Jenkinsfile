@@ -1,71 +1,42 @@
 pipeline {
-    agent any 
-    stages {
-        stage('Clone') {
+    agent any
+    stages  {
+        stage('Git clone')    {
             steps {
-                echo "checking out the repo"
-                git 'https://github.com/edureka-devops/jenkins-demo.git'
-            
+                echo 'Git clone started'
+                git 'https://github.com/KaranDhillon73/jenkins-demo.git'
+                echo 'Git clone completed'
             }
         }
-        stage('build'){
+        stage('Maven build')    {
             steps {
-                echo "building the project"
-                sh "cd MavenProject ; mvn clean install ; pwd"
-            }
-        }
-        
-        stage('Archieve Artifacts'){
-            steps {
-                echo "archiving the artifacts"
-                archiveArtifacts 'MavenProject/multi3/target/*.war'
-            }
-            
-        }
-        stage('Deployment') {
-            // Deployment
-            steps {
-                script {
-                    echo "deployment"
-                    sh 'cp MavenProject/multi3/target/*.war /var/lib/tomcat8/webapps/'
+                echo 'Maven Build Started'
+                withMaven(globalMavenSettingsConfig: '', jdk: 'java11', maven: 'maven3', mavenSettingsConfig: '', traceability: true) {
+                    bat 'mvn -f MavenProject/ clean package'
                 }
+                echo 'Maven Build Completed'
             }
         }
-        stage('publish html report') {
-            steps{
-                echo "publishing the html report"
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '', reportFiles: 'index.html', reportName: 'HTML Report', reportTitles: ''])
-            }
-        }
-        stage('clean up') {
+        stage('Archive')    {
             steps {
-                echo "cleaning up the workspace"
-                cleanWs()
+                echo 'Archiev Started'
+                archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+                echo 'Archiev Completed'
             }
         }
-        stage("Metrics"){
-            steps{
-            parallel ( "JavaNcss Report":   
-            {
-                git 'https://github.com/edureka-devops/jenkins-demo.git'
-                sh "cd javancss-master ; mvn test javancss:report ; pwd"
-                  
-            },
-            "FindBugs Report" : {
-                sh "mkdir javancss1 ; cd javancss1 ;pwd"
-                git 'https://github.com/edureka-devops/jenkins-demo.git'
-                sh "cd javancss-master ; mvn findbugs:findbugs ; pwd"
-                deleteDir()
-
-              }
-         )
+        stage('deploy tomcat 8')    {
+            steps {
+                echo 'deployment to tomcat 8 started'
+                deploy adapters: [tomcat8(credentialsId: '011dff00-5d7a-49d3-bd72-20a30ac57678', path: '', url: 'http://127.0.0.1:8082/')], contextPath: 'Module10Application', onFailure: false, war: '**/*.war'
+                echo 'deployment to tomcat 8 completed'
             }
-         post{
-                success {
-                    emailext body: 'Successfully completed pipeline project with archiving the artifacts', subject: 'Pipeline was successfull', to: 'vathsala.hn22@gmail.com'
-                }
-    }
-}
-        
-    }
+        }
+        stage('Send mail')    {
+            steps {
+                echo 'Sending mail to recipients'
+                emailext body: 'this is test email', subject: 'Module10_Build_details', to: 'karan.dhillon73@gmail.com'
+                echo 'Sent mail to recipients'
+            }
+        }
+  }
 }
